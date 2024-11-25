@@ -1,0 +1,520 @@
+# Format: <SettingName>: <Settingvalue>
+# Setting name must appear at start of line and there must be whitespace after the colon.
+# Multiple values can be comma separated or on subsequent lines.
+
+# Open a file
+Control O:                   OpenFile
+
+# Close the current file
+Control F4:                  OpenFile
+
+# Save the current file
+Control S:                   SaveFile
+
+# Save all files
+Control S, Control S:        SaveAll
+
+# Show the Find File panel
+Shift Alt O:                 FindFile
+
+# Create a new text file
+Control N:                   NewTextFile
+
+# Cut to Clipboard
+Control X:                   Cut
+
+# Copy to clipboard
+Control C:                   Copy
+
+# Paste from clipboard
+Control V:                   Paste
+
+# Show the paste history dropdown
+Control Shift V:             PasteHistory
+
+# Find text in the current file
+Control F:                   FindInFile
+
+# Find the previous occurance of the last searched for text in the current file
+Shift F3:                    FindInFilePrev
+
+# Find the next occurance of the last searched for text in the current file
+F3:                          FindInFileNext
+
+# Find the previous occurance of the current word in the current file
+Control Shift F3:            FindInFilePrevCurrentWord
+
+# Find the next occurance of the current word in the current file
+Control F3:                  FindInFileNextCurrentWord
+
+# Find and replace text in the current file
+Control H:                   FindReplaceInFile
+
+# Go to the specified line in the current file
+Control G:                   GoToLine
+
+# Go to the previous cursor location
+Control -:                   PrevLocation
+
+# Go to the next cursor location
+Control Shift -:             NextLocation
+
+# Go to the previous cursor location in the current file
+Control =:                   PrevLocationCurrentFile
+
+# Go to the next cursor location in the current file
+Control Shift =:             NextLocationCurrentFile
+
+# Go to the previous edit location
+Control Shift Backspace:     PrevEditLocation
+
+# Select the next occurance of the current word using multi-cursor select
+Control D:                   SelectNextMultiCursor
+
+# Select all of the find results with multiple cursors
+Control Shift Alt J:         SelectAllOccurrences
+
+# Add a new cursor at the current mouse pos
+Control MouseMiddleButton:   AddCursorAtMousePos
+
+# Undo the last operation
+Control Z:                   Undo
+
+# Redo the last undone operation
+Control Y:                   Redo
+
+# Make selection uppercase
+Control Shift U:             MakeSelectionUppercase
+
+# Make selection lowercase
+Control U:                   MakeSelectionLowercase
+
+# Move current line up one
+Control Shift Up:            MoveLineUp
+
+# Move current line down one
+Control Shift Down:          MoveLineDown
+
+# Cut the current line
+Shift Delete:                CutLine
+
+# Delete the current line
+Control Shift L:             DeleteLine
+
+# Show the current file in the workspace tree
+Control T:                   ShowInWorkspaceTree
+
+# Add a new cursor on the line above
+Shift Alt Up:                MultiCursorMoveUp
+
+# Add a new cursor on the line below
+Shift Alt Down:              MultiCursorMoveDown
+
+# Increase selection end for all multi-cursors
+Shift Alt Left:              MultiCursorMoveLeft
+
+# Decrease selection end for all multi-cursors
+Shift Alt Right:             MultiCursorMoveRight
+
+# Comment the current line or selected lines
+Control K, Control C:        Commentline
+
+# Uncomment the current line or selected lines
+Control K, Control U:        Uncommentline
+
+# Toggle line comment if no select. Toggle block comment if selection. Use the CommentBlockUsesLineComments setting to make it always use line or block comments.
+Control Shift /:             ToggleComment
+
+# Delete to the end of the line.
+Control L:                   DeleteToEndOfLine
+
+# Duplicate the current line
+Control Shift D:             DuplicateLine
+
+# Insert a new line at the current line
+Control Enter:               InsertLine
+
+# Insert a new line after the current line
+Control Shift Enter:         InsertLineAfter
+
+# Select all text
+Control A:                   SelectAll
+
+# Select the current word
+Control W:                   SelectCurrentWord
+
+# Select the current scope
+Shift Alt =:                 SelectCurrentScope
+
+# Select the current scope for ()[]{}
+Control Shift M:             SelectCurrentBracketScope
+
+# Delete the current character or selected text
+Delete:                      Delete
+
+# Collapse the current region
+Control Shift [:             CollapseRegion
+
+# Expand the current region
+Control Shift ]:             ExpandRegion
+
+# Toggle the collapse/expand of the current region
+Control M, Control M:        ToggleCollapseExpandRegion
+
+# Toggle the collapse/expand of the all regions in the file
+Control M, Control L:        ToggleCollapseExpandAllRegions
+
+# Toggle the workspace explorer panel
+Control Shift E:             ToggleWorkspaceExplorer
+
+# Move the current panel left
+Control Alt Left:            MovePanelLeft
+
+# Move the current panel right
+Control Alt Right:           MovePanelRight
+
+# Move the current panel up
+Control Alt Up:              MovePanelUp
+
+# Move the current panel down
+Control Alt Down:            MovePanelDown
+
+# Move the current panel focus left
+Alt Left:                    MovePanelFocusLeft
+
+# Move the current panel focus right
+Alt Right:                   MovePanelFocusRight
+
+# Move the current panel focus up
+Alt Up:                      MovePanelFocusUp
+
+# Move the current panel focus down
+Alt Down:                    MovePanelFocusDown
+
+# Show the switch file panel
+Control Tab:                 ShowSwitchPanelPanel
+
+# Move to the previous item in the switch file panel
+Control Shift Tab:           ShowSwitchPanelPrevItem
+
+# Duplicate the current panel
+Shift Alt D:                 DuplicatePanel
+
+# Duplicate the current panel and move to the left
+Alt Comma:                   DuplicatePanelLeft
+
+# Duplicate the current panel and move to the right
+Alt .:                       DuplicatePanelRight
+
+# Focus the previous tab in the current panel
+Control PageUp:              PrevPanelTab
+
+# Focus the next tab in the current panel
+Control PageDown:            NextPanelTab
+
+# Toggle whitespace visibility
+# @sleepCOW disabled
+#Control Shift W:             ToggleWhitespace
+
+# Jump to the definition of the current symbol
+Alt G:                       GotoSymbolDefinition
+
+# Jump to the definition of the symbol at the mouse position
+MouseMiddleButton:           GotoSymbolDefinitionUnderMouse
+
+# Find a symbol in the workspace
+Shift Alt S:                 FindSymbol
+
+# Show references for the current symbol
+Shift Alt F:                 FindSymbolReferences
+
+# Rename the current symbol
+Control R:                   RenameSymbol
+
+# Submit the current symbol rename
+Enter:                       SubmitRenameSymbol
+
+# Open the Find Function panel to find a function defnition in the current file
+Alt M:                       FindFunction
+
+# Show the autocomplete dropdown
+Control Space:               Autocomplete
+
+# Move to the previous item in the autocomplete list
+Up:                          AutocompleteUp
+
+# Move to the next item in the autocomplete list
+Down:                        AutocompleteDown
+
+# Page selection up in the autocomplete list
+PageUp:                      AutocompletePageUp
+
+# Page selection down in the autocomplete list
+PageDown:                    AutocompletePageDown
+
+# If cursor is in a function call show the function declaration
+Control Shift Space:         ShowFunctionArgsInfo
+
+# Build the currently active workspace
+F7:                          BuildActiveWorkspace
+
+# Rebuild the currently active workspace
+Control Alt F7:              RebuildActiveWorkspace
+
+# Build the current file
+Control F7:                  BuildCurrentFile
+
+# Go to the previous build warning or error
+Shift F8:                    GotoPrevBuildWarningOrError
+
+# Go to the next build warning or error
+F8:                          GotoNextBuildWarningOrError
+
+# Cancel the current build
+Control Cancel:              CancelBuild
+
+# Start debugging or continue debugging if debugger paused
+F5:                          StartDebugging
+
+# Restart the debugger
+Control Shift F5:            RestartDebugging
+
+# Stop debugging
+Shift F5:                    StopDebugging
+
+# Debug step over
+F10:                         DebugStepOver
+
+# Debug step into
+F11:                         DebugStepInto
+
+# Debug step out
+Shift F11:                   DebugStepOut
+
+# Launch the exe without debugging
+Control F5:                  Run
+
+# Toggle breakpoint on the current line
+F9:                          ToggleBreakpoint
+
+# Remove all breakpoints from the current file
+Control Shift F9:            RemoveAllBreakpointsFromFile
+
+# Start/stop recording a key sequence
+Control Shift R:             RecordKeySequence
+
+# Playback a key sequence
+Control Shift P:             PlaybackKeySequence
+
+# Show the execute command text box
+Control Shift X:             ShowCommandPanel
+
+# Toggle bookmark for current line
+Control F2:                  ToggleBookmark
+
+# Go to the previous bookmark
+Shift F2:                    PrevBookmark
+
+# Go to the next bookmark
+F2:                          NextBookmark
+
+# Go to the previous bookmark in the current file
+Shift Alt F2:                PrevBookmarkInFile
+
+# Go to the next bookmark in the current file
+Alt F2:                      NextBookmarkInFile
+
+# Remove all bookmarks from the current file
+Control Shift F2:            RemoveAllBookmarksFromFile
+
+# Go to the previus result in the last search or build operation
+Shift F4:                    GotoPrevResult
+
+# Go to the next result in the last search or build operation
+F4:                          GotoNextResult
+
+# Re-open the most recently closed file
+Control Shift T:             RestoreRecentlyClosedFile
+
+# Move to the matching bracket or brace
+Control Shift \:             MoveToMatchingBracket
+
+# Format the selection or the current scope if no selection
+Control K, Control F:        FormatSelection
+
+# Insert prev autocomplete
+Shift F14:                   InsertPrevAutocomplete
+
+# Insert next autocomplete
+F14:                         InsertNextAutocomplete
+
+# Move the cursor up in the current text editor
+Up:                          MoveCursorUp
+
+# Move the cursor down in the current text editor
+Down:                        MoveCursorDown
+
+# Move the cursor left in the current text editor
+Left:                        MoveCursorLeft
+
+# Move the cursor right in the current text editor
+Right:                       MoveCursorRight
+
+# Move the selection up one line
+Shift Up:                    SelectUp
+
+# Move the selection down one line
+Shift Down:                  SelectDown
+
+# Move the selection left one character
+Shift Left:                  SelectLeft
+
+# Move the selection right one character
+Shift Right:                 SelectRight
+
+# Move the cursor to the start of the line
+Home:                        MoveToLineStart
+
+# Move the cursor to the end of the line
+End:                         MoveToLineEnd
+
+# Move the cursor to the end of the file
+Control Home:                MoveToFileStart
+
+# Move the cursor to the end of the file
+Control End:                 MoveToFileEnd
+
+# Select to the start of the file
+Control Shift Home:          SelectToFileStart
+
+# Select to the end of the file
+Control Shift End:           SelectToFileEnd
+
+# Select to the start of the line
+Shift Home:                  SelectToLineStart
+
+# Select to the end of the line
+Shift End:                   SelectToLineEnd
+
+# Show the FindInFiles panel
+Control Shift G:             FindInFiles
+
+# Show the ReplaceInFiles panel
+Control Shift H:             ReplaceInFiles
+
+# Show the context menu for the currently selected UI element
+Shift F10:                   ShowContextMenu
+
+# Replace the next item from the Find.Replace panel
+Alt R:                       ReplaceNextInFile
+
+# Replace all items in the current file from the Find.Replace panel
+Shift Alt R:                 ReplaceAllInFile
+
+# Indent the current line or selected lines
+Control ]:                   IndentLine
+
+# Unindent the current line or selected lines
+Control [:                   UnindentLine
+
+# Move the cursor to the previous word
+Control Left:                MoveCursorPrevWord
+
+# Move the cursor to the next word
+Control Right:               MoveCursorNextWord
+
+# Select to the start of the current/prev word
+Control Shift Left:          MoveCursorPrevWordSelect
+
+# Select to the end of the current/next word
+Control Shift Right:         MoveCursorNextWordSelect
+
+# Scroll one line up
+Control Up:                  ScrollOneLineUp
+
+# Scroll one line down
+Control Down:                ScrollOneLineDown
+
+# Move up by a page
+PageUp:                      PageUp
+
+# Move down by a page
+PageDown:                    PageDown
+
+# Move selection up by a page
+Shift PageUp:                SelectPageUp
+
+# Move selection down by a page
+Shift PageDown:              SelectPageDown
+
+# Show the symbol info for the current symbol
+Control K, Control I:        ShowSymbolInfo
+
+# Internet search for the current word or selection using the InternetSearchCommand setting
+F1:                          InternetSearch
+
+# Zoom in on editor text (increase font size)
+Control Shift .:             ZoomIn
+
+# Zoom in on editor text (decrease font size)
+Control Shift Comma:         ZoomOut
+
+# Toggle fullscreen
+Alt Enter:                   ToggleFullscreen
+
+# Toggle focus mode
+Control Alt Enter:           ToggleFocusMode
+
+# Toggle fullscreen focus mode
+Shift Alt Enter:             ToggleFullScreenFocusMode
+
+# Open the current file at the current line in Visual Studio
+Alt X:                       OpenCurrentFileInVS
+
+# Toggle between the source .cpp and .h header file
+Alt O:                       CppParser.ToggleSourceHeader
+
+# Example showing how to bind a python function to a key
+Alt H:                       HelloWorld()
+
+# Copy to clipboard
+Control Insert:              Copy
+
+# Paste from clipboard
+Shift Insert:                Paste
+
+# Redo the last undone operation
+Control Shift Z:             Redo
+
+# Go to the previous cursor location
+MouseBackButton:             PrevLocation
+
+# Go to the next cursor location
+MouseForwardButton:          NextLocation
+
+# Show the context menu for the currently selected UI element
+AppsKey:                     ShowContextMenu
+
+# Move selection up by a page
+Shift Alt PageUp:            SelectPageUp
+
+# Move selection down by a page
+Shift Alt PageDown:          SelectPageDown
+
+# Move the cursor to the start of the line
+Shift Alt Home:              MoveToLineStart
+
+# Select to the end of the line
+Shift Alt End:               SelectToLineEnd
+
+# Select all of the find results with multiple cursors
+Alt F3:                      SelectAllOccurrences
+
+# Open Search Panel
+Control Shift S:             Search
+
+# Open Search Panel
+Control Shift F:             Search
+
+# sleepCOW settings
+Control Shift W:             CloseFile
