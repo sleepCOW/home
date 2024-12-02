@@ -10,7 +10,7 @@
 OpenLastWorkspaceOnStartup:            true
 
 # Path of the Visual Studio VsDevCmd.bat or vcvars64.bat batch file to use for setting the Visual Studio build environment. Restart 10X after changing this value. Set to 'auto' to let 10x try and find the path. For 10x workspaces make sure the "Use Visual Studio Build Environment" workspace setting is checked.
-VisualStudioEnvBat:                    C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Auxiliary/Build/vcvars64.bat
+VisualStudioEnvBat:                    C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvars64.bat
 
 # Path of the Visual Studio install. Used to find the VisualStudioEnvBat path and to start the VS debugger. eg C:\Program Files (x86)\Microsoft Visual Studio\2019\Community. Set to `default` to automatically find the path to the latest installed VS. Requires restart of 10x.
 VisualStudioInstallPath:               default
@@ -308,7 +308,7 @@ UpdateIndentsOnPaste:                  true
 ExtendEmptyLines:                      false
 
 # The default WordWrap setting when opening files
-WordWrap:                              true
+WordWrap:                              false
 
 # Show whitespace
 ShowWhitespace:                        false
