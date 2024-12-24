@@ -286,7 +286,7 @@ TabWidth:                              4
 
 # Whether lines should be indented with tabs or spaces
 # Valid values: Tabs, Spaces
-IndentMode:                            Tabs
+IndentMode:                            Spaces
 
 # If IndentMode is set to spaces backspace will delete TabWidth spaces
 BackspaceDeletesTabs:                  false
@@ -410,6 +410,10 @@ SpaceBrackets:                         false
 # When aligning to a function call open bracket with tab indent mode use tabs up to the current indent level and then use spaces
 UseSpacesAfterCurrentIndent:           false
 
+# If true make sure there are no spaces before commas chars and 1 space after
+FormatCommas:                          true
+
+
 # 
 # Perforce
 # 
@@ -444,7 +448,7 @@ CloseBuildOutputAfterBuild:            false
 # 
 
 # Sync the current debug line when it changes in the external debugger
-SyncDebugLine:                         
+SyncDebugLine: true                      
 
 # 
 # Parser

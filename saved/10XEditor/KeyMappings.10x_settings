@@ -57,7 +57,7 @@ Control G:                   GoToLine
 Control -:                   PrevLocation
 
 # Go to the next cursor location
-Control Shift -:             NextLocation
+Control +:            		 NextLocation
 
 # Go to the previous cursor location in the current file
 Control =:                   PrevLocationCurrentFile
@@ -520,3 +520,4 @@ Control Shift F:             Search
 Control Shift W:             CloseFile
 Shift 	Alt   Q:             Define()
 Shift 	Alt   W:             AddInclude()
+
