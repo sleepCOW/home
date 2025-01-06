@@ -57,7 +57,7 @@ Control G:                   GoToLine
 Control -:                   PrevLocation
 
 # Go to the next cursor location
-Control Shift -:             NextLocation
+Control +:            		 NextLocation
 
 # Go to the previous cursor location in the current file
 Control =:                   PrevLocationCurrentFile
@@ -310,19 +310,19 @@ Control Shift P:             PlaybackKeySequence
 Control Shift X:             ShowCommandPanel
 
 # Toggle bookmark for current line
-Control F2:                  ToggleBookmark
+Control Alt W:                  ToggleBookmark
 
 # Go to the previous bookmark
-Shift F2:                    PrevBookmark
+Control Q:                    PrevBookmark
 
 # Go to the next bookmark
-F2:                          NextBookmark
+Control E:                          NextBookmark
 
 # Go to the previous bookmark in the current file
-Shift Alt F2:                PrevBookmarkInFile
+Control Alt Q:                 PrevBookmarkInFile
 
 # Go to the next bookmark in the current file
-Alt F2:                      NextBookmarkInFile
+Control Alt E:                 NextBookmarkInFile
 
 # Remove all bookmarks from the current file
 Control Shift F2:            RemoveAllBookmarksFromFile
@@ -518,5 +518,6 @@ Control Shift F:             Search
 
 # sleepCOW settings
 Control Shift W:             CloseFile
-Shift 	Alt   Q:             Define()
-Shift 	Alt   W:             AddInclude()
+#Shift 	Alt   Q:             Define()
+#Shift 	Alt   W:             AddInclude()
+Control B: BuildActiveWorkspace

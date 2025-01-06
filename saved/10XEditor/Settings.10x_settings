@@ -286,7 +286,7 @@ TabWidth:                              4
 
 # Whether lines should be indented with tabs or spaces
 # Valid values: Tabs, Spaces
-IndentMode:                            Tabs
+IndentMode:                            Spaces
 
 # If IndentMode is set to spaces backspace will delete TabWidth spaces
 BackspaceDeletesTabs:                  false
