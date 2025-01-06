@@ -10,7 +10,7 @@
 OpenLastWorkspaceOnStartup:            true
 
 # Path of the Visual Studio VsDevCmd.bat or vcvars64.bat batch file to use for setting the Visual Studio build environment. Restart 10X after changing this value. Set to 'auto' to let 10x try and find the path. For 10x workspaces make sure the "Use Visual Studio Build Environment" workspace setting is checked.
-VisualStudioEnvBat:                    C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvars64.bat
+VisualStudioEnvBat:                    C:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Auxiliary\Build\vcvars64.bat
 
 # Path of the Visual Studio install. Used to find the VisualStudioEnvBat path and to start the VS debugger. eg C:\Program Files (x86)\Microsoft Visual Studio\2019\Community. Set to `default` to automatically find the path to the latest installed VS. Requires restart of 10x.
 VisualStudioInstallPath:               default
@@ -53,7 +53,7 @@ SaveAllOnLoseFocus:                    false
 SaveAsUsesPrevPanelPath:               true
 
 # Update to the early access builds. Builds are released on early access before general release.
-EarlyAccessUpdates:                    false
+EarlyAccessUpdates:                    true
 
 # 
 # Accessibility
@@ -410,6 +410,10 @@ SpaceBrackets:                         false
 # When aligning to a function call open bracket with tab indent mode use tabs up to the current indent level and then use spaces
 UseSpacesAfterCurrentIndent:           false
 
+# If true make sure there are no spaces before commas chars and 1 space after
+FormatCommas:                          true
+
+
 # 
 # Perforce
 # 
@@ -444,7 +448,7 @@ CloseBuildOutputAfterBuild:            false
 # 
 
 # Sync the current debug line when it changes in the external debugger
-SyncDebugLine:                         
+SyncDebugLine:           true              
 
 # 
 # Parser
