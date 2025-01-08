@@ -1,0 +1,19 @@
+IDE:
+
+Find Symbols in the project: 	Shift + Alt + S
+Find Files in the project: 		Shift + Alt + O
+Find references for the symbol: Shift + Alt + F
+
+Search in the file: 			Ctrl + F
+Search in the project: 			Ctrl + Shift + F
+
+ToggleBookmark: 				Ctrl + Alt + W
+
+# Go to the previous bookmark
+PrevBookmark: 					Control + Q:                    
+# Go to the next bookmark
+NextBookmark: 					Control + E:                          
+# Go to the previous bookmark in the current file
+PrevBookmarkInFile: 			Control + Alt + Q:                 
+# Go to the next bookmark in the current file
+NextBookmarkInFile: 			Control + Alt + E:                 
