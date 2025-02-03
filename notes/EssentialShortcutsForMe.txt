@@ -1,5 +1,7 @@
 IDE:
 
+(Navigation)
+
 Find Symbols in the project: 	Shift + Alt + S
 Find Files in the project: 		Shift + Alt + O
 Find references for the symbol: Shift + Alt + F
@@ -16,4 +18,12 @@ NextBookmark: 					Control + E:
 # Go to the previous bookmark in the current file
 PrevBookmarkInFile: 			Control + Alt + Q:                 
 # Go to the next bookmark in the current file
-NextBookmarkInFile: 			Control + Alt + E:                 
+NextBookmarkInFile: 			Control + Alt + E:
+
+Toggle workspace view: 			Ctrl + Shift + E
+Select current file in workspace view: Ctrl + T
+
+Go to previous edit: 			Ctrl + Minus
+Go to next edit: 				Ctrl + Plus
+
+Toggle header/source files: 	Alt + O
