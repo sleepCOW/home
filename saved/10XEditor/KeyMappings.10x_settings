@@ -518,6 +518,6 @@ Control Shift F:             Search
 
 # sleepCOW settings
 Control Shift W:             CloseFile
-#Shift 	Alt   Q:             Define()
+Shift 	Alt   Q:             Define()
 #Shift 	Alt   W:             AddInclude()
 Control B: BuildActiveWorkspace

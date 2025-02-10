@@ -38,13 +38,15 @@ def __MakeImplementationSignature__(DeclarationLine: str):
 
     return ReturnType + ScopeName + FunctionName + "(" + Args + ")" + FunctionTrailingSpecifiers
 
-def Define():
+def _Define(bDefineInSourceFile : bool):
 	ClassName = N10X.Editor.GetCurrentScopeName()
 	CurrentLineText = N10X.Editor.GetCurrentLine()
 
 	Signature = __MakeImplementationSignature__(CurrentLineText)
 	SourceToPaste = Signature + "\n{\n\n}"
-	ToggleCppHeader()
+
+	if bDefineInSourceFile:
+		ToggleCppHeader()
 	
 	PageText = N10X.Editor.GetFileText()
 	
@@ -56,6 +58,14 @@ def Define():
 	PageText += "\n\n" + SourceToPaste
 	N10X.Editor.SetFileText(PageText)
 
+def Define():
+	_Define(True)
+
+def DefineInHeader():
+	_Define(False)
+
+def TestCom():
+	print(N10X.Editor.GetSymbolDefinition(N10X.Editor.GetCursorPos()))
 
 def OldDefine():
 	ClassName = N10X.Editor.GetCurrentScopeName()
