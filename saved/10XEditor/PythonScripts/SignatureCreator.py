@@ -38,6 +38,28 @@ def __MakeImplementationSignature__(DeclarationLine: str):
 
     return ReturnType + ScopeName + FunctionName + "(" + Args + ")" + FunctionTrailingSpecifiers
 
+def _FindLineNumber(LineToFind: str, Text: str):
+	Index = -1
+
+	i = 0
+	for Line in Text.splitlines():
+		if LineToFind == Line:
+			return i
+		i = i + 1
+
+	return Index
+
+# In case user didn't
+def _StupidGoTo():
+	CurrentLineText = N10X.Editor.GetCurrentLine()
+	X, Y = N10X.Editor.GetCursorPos()
+	
+	for i in range(0, len(CurrentLineText)):
+		SymbolType = N10X.Editor.GetSymbolType((i, Y))
+		if SymbolType == "MemberFunctionDeclaration":
+			N10X.Editor.ExecuteCommand("GotoSymbolDefinition")
+			break
+
 def _Define(bDefineInSourceFile : bool):
 	ClassName = N10X.Editor.GetCurrentScopeName()
 	CurrentLineText = N10X.Editor.GetCurrentLine()
@@ -46,17 +68,28 @@ def _Define(bDefineInSourceFile : bool):
 	SourceToPaste = Signature + "\n{\n\n}"
 
 	if bDefineInSourceFile:
-		ToggleCppHeader()
+		N10X.Editor.ExecuteCommand("CppParser.ToggleSourceHeader")
 	
 	PageText = N10X.Editor.GetFileText()
-	
+
 	if Signature in PageText:
+		# If we found a signature find the line where signature is located, so we can do GoTo
 		print("Function " + Signature + " already defined")
-		ToggleCppHeader()
+		_StupidGoTo()
+		#LineNum = _FindLineNumber(Signature, PageText)
+		#N10X.Editor.SetCursorY(LineNum)
 		return
+
+	# We can't simply use _StupidGoTo because we maybe in another file
+	# Attempt to hack using ToggleSourceHeader and StupidGoTo had no success
 
 	PageText += "\n\n" + SourceToPaste
 	N10X.Editor.SetFileText(PageText)
+	
+	# Can simply split and count PageText lines
+	LineNum = _FindLineNumber(Signature, PageText)
+	# Set position to be in the curly brackets so we can start typing right away
+	N10X.Editor.SetCursorPos((4, LineNum + 2))
 
 def Define():
 	_Define(True)
@@ -65,7 +98,19 @@ def DefineInHeader():
 	_Define(False)
 
 def TestCom():
-	print(N10X.Editor.GetSymbolDefinition(N10X.Editor.GetCursorPos()))
+	print(N10X.Editor.GetFileText())
+	MousePos = N10X.Editor.GetCursorPos()
+	print(MousePos)
+	print(N10X.Editor.GetLine(MousePos[1]))
+
+
+def SymbolType():
+	MousePos = N10X.Editor.GetCursorPos()
+	print(N10X.Editor.GetSymbolType(MousePos))
+
+def SymbolDefinition():
+	MousePos = N10X.Editor.GetCursorPos()
+	print(N10X.Editor.GetSymbolDefinition(MousePos))
 
 def OldDefine():
 	ClassName = N10X.Editor.GetCurrentScopeName()
