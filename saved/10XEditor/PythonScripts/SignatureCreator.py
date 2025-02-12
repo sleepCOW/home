@@ -19,7 +19,9 @@ def _IsCurrentLineFunctionDeclaration():
     return False
 
 
-def __MakeImplementationSignature__(DeclarationLine: str):
+def _MakeImplementationSignature():
+    DeclarationLine = N10X.Editor.GetCurrentLine()
+
     FunctionArgStart = DeclarationLine.find("(")
     FunctionArgEnd = DeclarationLine.rfind(")")
     FunctionName = DeclarationLine[0:FunctionArgStart].split()[-1]
@@ -27,6 +29,7 @@ def __MakeImplementationSignature__(DeclarationLine: str):
     ReturnTypeEnd = DeclarationLine.find(FunctionName)
     ReturnType = DeclarationLine[0:ReturnTypeEnd]
     ReturnType = ReturnType.replace("virtual", "")
+    ReturnType = ReturnType.replace("static", "")
     ReturnType = ReturnType.lstrip()
 
     # Trailing specifiers can include const, override, final,
@@ -87,9 +90,7 @@ def _Define(bToggleSourceHeader: bool):
         print("Function already defined")
         return
 
-    CurrentLineText = N10X.Editor.GetCurrentLine()
-
-    Signature = __MakeImplementationSignature__(CurrentLineText)
+    Signature = _MakeImplementationSignature()
     SourceToPaste = Signature + "\n{\n\n}"
 
     if bToggleSourceHeader:
@@ -125,7 +126,7 @@ def _Define(bToggleSourceHeader: bool):
     N10X.Editor.SetFileText(PageText)
 
     LineNum, Line = _FindLineNumber(Signature, PageText)
-    # Set position to be in the curly brackets so we can start typing right away
+    # Set position to be in the curly brackets, so we can start typing right away
     N10X.Editor.SetCursorPos((4, LineNum + 2))
 
 
