@@ -1,4 +1,5 @@
 import N10X
+from Utilities import *
 
 def _IsFunctionDeclaration(Type: str) -> bool:
     return Type == "MemberFunctionDeclaration" or Type == "FunctionDeclaration"
@@ -21,15 +22,21 @@ def _IsCurrentLineFunctionDeclaration():
 
 def _MakeImplementationSignature():
     DeclarationLine = N10X.Editor.GetCurrentLine()
+    X, LineNum = N10X.Editor.GetCursorPos()
 
     FunctionArgStart = DeclarationLine.find("(")
     FunctionArgEnd = DeclarationLine.rfind(")")
     FunctionName = DeclarationLine[0:FunctionArgStart].split()[-1]
 
     ReturnTypeEnd = DeclarationLine.find(FunctionName)
-    ReturnType = DeclarationLine[0:ReturnTypeEnd]
+
+    # Remove all macro from return type, mainly to remove any MODULENAME_API defines
+    # TODO: We probably also want to remove Defines from function args, like UPARAM
+    ReturnType = str(SourceCodeLine(DeclarationLine[0:ReturnTypeEnd], LineNum).RemoveAll("Define"))
+
     ReturnType = ReturnType.replace("virtual", "")
     ReturnType = ReturnType.replace("static", "")
+
     ReturnType = ReturnType.lstrip()
 
     # Trailing specifiers can include const, override, final,
@@ -47,12 +54,11 @@ def _MakeImplementationSignature():
     # We need to verify that each splitted part has FunctionArg symbol in it
     # And I actually need to go through indexes rather array of tokens in Args because SymbolType operates based on CursorPos
     FilteredArgs = []
-    X, Line = N10X.Editor.GetCursorPos()
     Index = FunctionArgStart + 1
     for Arg in Args:
         ArgLen = len(Arg)
         for i in range(0, ArgLen):
-            if N10X.Editor.GetSymbolType((Index + i, Line)) == "FunctionArg":
+            if N10X.Editor.GetSymbolType((Index + i, LineNum)) == "FunctionArg":
                 FilteredArgs.append(Arg)
                 break
         Index += 1  # Account for skipped ',' due to split()
