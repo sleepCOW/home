@@ -1,23 +1,14 @@
 import N10X
 from Utilities import *
 
-def _IsFunctionDeclaration(Type: str) -> bool:
-    return Type == "MemberFunctionDeclaration" or Type == "FunctionDeclaration"
-
 
 def _IsFunctionDefinition(Type: str) -> bool:
     return Type == "MemberFunctionDefinition" or Type == "FunctionDefinition"
 
 
 def _IsCurrentLineFunctionDeclaration():
-    CurrentLineText = N10X.Editor.GetCurrentLine()
-    X, Y = N10X.Editor.GetCursorPos()
-
-    for i in range(0, len(CurrentLineText)):
-        SymbolType = N10X.Editor.GetSymbolType((i, Y))
-        if _IsFunctionDeclaration(SymbolType):
-            return True
-    return False
+    CurrentLineText = SourceCodeLine.FromCurrentLine()
+    return CurrentLineText.HasAny(["MemberFunctionDeclaration", "FunctionDeclaration"])
 
 
 def _MakeImplementationSignature():
@@ -93,7 +84,7 @@ def _FindLineNumber(LineToFind: str, Text: str):
 
 def _Define(bToggleSourceHeader: bool):
     if not _IsCurrentLineFunctionDeclaration():
-        print("Function already defined")
+        print("You haven't selected function declaration, nothing to generate!")
         return
 
     Signature = _MakeImplementationSignature()

@@ -1,4 +1,5 @@
 import N10X
+from Utilities import *
 
 def GetSymbolType():
     MousePos = N10X.Editor.GetCursorPos()
@@ -11,6 +12,10 @@ def GetPreprocessedLine():
 def GetSymbolDefinition():
     MousePos = N10X.Editor.GetCursorPos()
     print(N10X.Editor.GetSymbolDefinition(MousePos))
+
+def MyFuncTest():
+    CurrentLineText = SourceCodeLine.FromCurrentLine()
+    print(CurrentLineText.HasAny(["MemberFunctionDeclaration", "FunctionDeclaration"]))
 
 
 # class SourceCodeLine:

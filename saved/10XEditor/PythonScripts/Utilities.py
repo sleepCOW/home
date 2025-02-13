@@ -35,6 +35,22 @@ class SourceCodeLine:
             Part.RemoveAll(SymbolTypeToRemove)
         return self
 
+    def HasAny(self, SymbolTypeToFind: str | list[str]) -> bool:
+        """
+        Checks if the source line contains at least one occurrence of a specified symbol type across all parts.
+
+        :param SymbolTypeToFind: The symbol type to search for, either as a single symbol type or a list of types.
+        :return: True if any of the specified symbols are found, otherwise False.
+        """
+        for Part in self:
+            if Part.HasAny(SymbolTypeToFind):
+                return True
+        return False
+
+    def Split(self, Delimiter: str):
+        for Part in self:
+            Part.Split(Delimiter)
+
     def __str__(self):
         """
         Converts the source code line to a string representation.
@@ -52,15 +68,23 @@ class SourceCodeLine:
         """
         Initializes an iterator over the source code parts.
         """
-        self.IterNode = self.Head
+        self.CurrentNode = self.Head
+        self.PrevNode = None
+        #self.NextNode = self.Head.Next
         return self
 
     def __next__(self):
-        if self.IterNode is None:
+        if self.PrevNode and self.PrevNode.Next != self.CurrentNode:
+            Node = self.PrevNode.Next
+        else:
+            Node = self.CurrentNode
+
+        if Node is None:
             raise StopIteration
 
-        Node = self.IterNode
-        self.IterNode = self.IterNode.Next
+        self.PrevNode = Node
+        self.CurrentNode = Node.Next
+
         return Node
 
 
@@ -130,15 +154,6 @@ class SourceCodePart:
 
         return FoundStart, -1
 
-    def _PosToStrIndex(self, Index: int):
-        """
-        Converts a position in the source code content to an index relative to the part.
-
-        :param Index: The CURSOR index to translate.
-        :return: The relative index within the part.
-        """
-        return Index - self.Start
-
     def RemoveAll(self, SymbolTypeToRemove: str):
         """
         Removes all occurrences of a specific symbol type from this part.
@@ -151,16 +166,34 @@ class SourceCodePart:
             return
 
         # Split into 2 parts omitting the found middle (containing symbol we want to remove)
-        NewNext = SourceCodePart(self.Line[self._PosToStrIndex(End):self._PosToStrIndex(self.End)], End, self.End,
-                                 self.LineNum, self.Next)
-        self.Next = NewNext
+        self._SplitPart(Start, End)
 
-        # Now fix first part end index and content
-        self.Line = self.Line[0:self._PosToStrIndex(Start)]
-        self.End = Start
+    def HasAny(self, SymbolTypeToFind: str | list[str]) -> bool:
+        """
+        Checks if the source code part contains at least one occurrence of a specified symbol type.
 
-        # Remove recursively till we process the whole source line
-        NewNext.RemoveAll(SymbolTypeToRemove)
+        :param SymbolTypeToFind: The symbol type to search for, either as a single symbol type or a list of types.
+        :return: True if any of the specified symbols are found, otherwise False.
+        """
+        if isinstance(SymbolTypeToFind, str):
+            SymbolsToCheck = [SymbolTypeToFind]
+        elif isinstance(SymbolTypeToFind, list):
+            SymbolsToCheck = SymbolTypeToFind
+
+        for SymbolType in self:
+            if SymbolType in SymbolsToCheck:
+                return True
+        return False
+
+    def Split(self, Delimiter: str):
+        # Find start, end of symbol to remove
+        # TODO: ADJUST START INTO CURSOR COORDINATES
+        Start = self.Line.find(Delimiter)
+        if Start == -1:
+            return
+
+        End = Start + len(Delimiter)
+        self._SplitPart(Start, End)
 
     def __str__(self):
         """
@@ -172,6 +205,32 @@ class SourceCodePart:
 
     def __iter__(self):
         return SourceCodePartySymbolTypeIterator(self)
+
+    # Find start, end of symbol to remove
+    # Start, End = self.FindSymbolRange(SymbolTypeToRemove)
+    # if Start == -1:
+    #     return
+    # Split current part in 2 parts while removing provided StartPos and EndPos
+    # NOTE WORKS IN CURSOR COORDINATES
+    def _SplitPart(self, RemoveStart: int, RemoveEnd: int):
+        # Split into 2 parts omitting the found middle (containing symbol we want to remove)
+        NewNext = SourceCodePart(self.Line[self._PosToStrIndex(RemoveEnd):self._PosToStrIndex(self.End)], RemoveEnd, self.End,
+                                 self.LineNum, self.Next)
+        self.Next = NewNext
+        # Now fix first part end index and content
+        self.Line = self.Line[0:self._PosToStrIndex(RemoveStart)]
+        self.End = RemoveStart
+
+        return NewNext
+
+    def _PosToStrIndex(self, Index: int):
+        """
+        Converts a position in the source code content to an index relative to the part.
+
+        :param Index: The CURSOR index to translate.
+        :return: The relative index within the part.
+        """
+        return Index - self.Start
 
 
 class SourceCodePartySymbolTypeIterator:
