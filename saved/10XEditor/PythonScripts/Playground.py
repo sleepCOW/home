@@ -15,6 +15,21 @@ def GetSymbolDefinition():
 
 def MyFuncTest():
     CurrentLineText = SourceCodeLine.FromCurrentLine()
+
+    CurrentLineText.Split(',')
+    print('---AFTER SPLIT---')
+    for Part in CurrentLineText:
+        PartStr = str(Part).replace("\n", " ")
+        print(f'Start = {Part.Start}, End = {Part.End} Part = {PartStr}')
+    print('---------')
+
+    RemovedParts = CurrentLineText.FilterParts('FunctionArg')
+    print(str(f'RemovedParts (after filter) = {str(RemovedParts)}'))
+    print(str(f'CurrentLineText (after filter) = {CurrentLineText}'))
+    for Part in RemovedParts:
+        PartStr = str(Part).replace("\n", " ")
+        print(f'Start = {Part.Start}, End = {Part.End} Part = {PartStr}')
+
     print(CurrentLineText.HasAny(["MemberFunctionDeclaration", "FunctionDeclaration"]))
 
 

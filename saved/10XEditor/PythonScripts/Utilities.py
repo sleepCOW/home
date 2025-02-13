@@ -8,9 +8,8 @@ class SourceCodeLine:
 
     Stores position information along with the string, so any API calls with CursorPos can be done with raging
     """
-
-    def __init__(self, Line: str, LineNum: int):
-        self.Head = SourceCodePart(Line, 0, len(Line), LineNum, None)
+    def __init__(self, Line: str, LineNum: int, CursorStart: int = 0):
+        self.Head = SourceCodePart(Line, CursorStart, CursorStart + len(Line), LineNum, None)
 
     @classmethod
     def FromCurrentLine(cls):
@@ -22,6 +21,32 @@ class SourceCodeLine:
         X, LineNum = N10X.Editor.GetCursorPos()
         CurrentLine = N10X.Editor.GetCurrentLine()
         return __class__(CurrentLine, LineNum)
+
+    @classmethod
+    def FromPart(cls, CodePart):
+        CodeLine = __class__("", 0)
+        CodeLine.Head = CodePart
+        return CodeLine
+
+    @classmethod
+    def LinkParts(cls, CodeParts: list):
+        """
+        Links a list of SourceCodePart instances into a sequential linked list.
+
+        :param CodeParts: A list of SourceCodePart objects to be linked together.
+        :return: The head of the linked list or None if the list is empty.
+        """
+        if len(CodeParts) > 0:
+            # Fix tail pointing to the end
+            CodeParts[-1].Next = None
+
+            for i in range(0, len(CodeParts) - 1):
+                CodeParts[i].Next = CodeParts[i + 1]
+
+            Head = CodeParts[0]
+            return Head
+
+        return None
 
     def RemoveAll(self, SymbolTypeToRemove: str):
         """
@@ -47,9 +72,49 @@ class SourceCodeLine:
                 return True
         return False
 
+    def FilterParts(self, SymbolTypeToFind: str | list[str]):
+        """
+        Filters parts of the source code line based on the specified symbol type(s).
+
+        :param SymbolTypeToFind: A symbol type or a list of symbol types to filter.
+        :return: A new SourceCodeLine instance containing the REMOVED parts.
+        """
+        PartsToKeep = []
+        PartsToRemove = []
+
+        for Part in self:
+            if Part.HasAny(SymbolTypeToFind):
+                PartsToKeep.append(Part)
+            else:
+                PartsToRemove.append(Part)
+
+        self.Head = self.LinkParts(PartsToKeep)
+        return self.FromPart(self.LinkParts(PartsToRemove))
+
     def Split(self, Delimiter: str):
+        """
+        Splits each part of the source code line using the given delimiter.
+
+        :param Delimiter: The string delimiter to split the parts on.
+        :return: The modified SourceCodeLine instance after splitting.
+        """
         for Part in self:
             Part.Split(Delimiter)
+        return self
+
+    def PartsCount(self):
+        """
+        Counts the total number of parts in the source code line.
+
+        :return: The number of parts in the source code line.
+        """
+        Len = 0
+        Node = self.Head
+        while Node is not None:
+            Len += 1
+            Node = Node.Next
+
+        return Len
 
     def __str__(self):
         """
@@ -70,7 +135,6 @@ class SourceCodeLine:
         """
         self.CurrentNode = self.Head
         self.PrevNode = None
-        #self.NextNode = self.Head.Next
         return self
 
     def __next__(self):
@@ -187,11 +251,11 @@ class SourceCodePart:
 
     def Split(self, Delimiter: str):
         # Find start, end of symbol to remove
-        # TODO: ADJUST START INTO CURSOR COORDINATES
         Start = self.Line.find(Delimiter)
         if Start == -1:
             return
 
+        Start += self.Start # Transform into cursor coordinates
         End = Start + len(Delimiter)
         self._SplitPart(Start, End)
 
@@ -206,13 +270,16 @@ class SourceCodePart:
     def __iter__(self):
         return SourceCodePartySymbolTypeIterator(self)
 
-    # Find start, end of symbol to remove
-    # Start, End = self.FindSymbolRange(SymbolTypeToRemove)
-    # if Start == -1:
-    #     return
-    # Split current part in 2 parts while removing provided StartPos and EndPos
-    # NOTE WORKS IN CURSOR COORDINATES
     def _SplitPart(self, RemoveStart: int, RemoveEnd: int):
+        """
+        Splits the current part into two parts while removing the content between the given start and end positions.
+
+        :param RemoveStart: The starting cursor position of the section to be removed.
+        :param RemoveEnd: The ending cursor position of the section to be removed.
+        :return: A new SourceCodePart instance representing the second half of the split part.
+
+        NOTE: The positions are based on cursor coordinates, not string indices.
+        """
         # Split into 2 parts omitting the found middle (containing symbol we want to remove)
         NewNext = SourceCodePart(self.Line[self._PosToStrIndex(RemoveEnd):self._PosToStrIndex(self.End)], RemoveEnd, self.End,
                                  self.LineNum, self.Next)

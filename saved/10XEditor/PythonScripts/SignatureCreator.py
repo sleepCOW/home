@@ -39,33 +39,34 @@ def _MakeImplementationSignature():
     FunctionTrailingSpecifiers = FunctionTrailingSpecifiers.rstrip()
 
     # Extract function arguments from selected line
-    Args = DeclarationLine[FunctionArgStart + 1:FunctionArgEnd].split(',')
+    FunctionArgs = SourceCodeLine(DeclarationLine[FunctionArgStart + 1:FunctionArgEnd], LineNum, FunctionArgStart + 1)
 
-    # To allow complex default values like const FVector InVec = FVector( 2.f, 4.f )
-    # We need to verify that each splitted part has FunctionArg symbol in it
-    # And I actually need to go through indexes rather array of tokens in Args because SymbolType operates based on CursorPos
-    FilteredArgs = []
-    Index = FunctionArgStart + 1
-    for Arg in Args:
-        ArgLen = len(Arg)
-        for i in range(0, ArgLen):
-            if N10X.Editor.GetSymbolType((Index + i, LineNum)) == "FunctionArg":
-                FilteredArgs.append(Arg)
-                break
-        Index += 1  # Account for skipped ',' due to split()
-        Index += ArgLen
+    FunctionArgs.Split(",")
+    # Remove any parts that doesn't have FunctionArg in them
+    # Consider example
+    # Initial args "FVector a = (4.f, 2.f), int b = 42"
+    # Parts after FilteredArgs.Split(","):
+    #   1. FVector a = (4.f
+    #   2. 2.f)
+    #   3. int b = 42
+    # Now we need to remove all parts that doesn't have FunctionArg in them, in our example part No. 2
+    FunctionArgs.FilterParts("FunctionArg")
 
-    # Stupid python that doesn't allow modification in place...
-    # So I need to write a bs one liner that is unreadable
-    # Remove any default params from arguments and any excessive whitespaces that left.
-    FilteredArgs = [Arg.split("=")[0].rstrip() for Arg in FilteredArgs]
+    # Now we should have following parts:
+    # 1. FVector a = (4.f
+    # 2. int b = 42
+    #
+    # And we want to build a string like "FVector a, int b"
+    # Essentially we to split each part by "=" take first part and remove any redundant spaces to the right
+    # Resulting list must be ["FVector a", "int b"]
+    FunctionArgs = [str(Part).split("=")[0].rstrip() for Part in FunctionArgs]
 
-    Delimeter = ','
-    FilteredArgs = Delimeter.join(FilteredArgs)
+    Delimiter = ','
+    FunctionArgs = Delimiter.join(FunctionArgs)
 
     ScopeName = N10X.Editor.GetCurrentScopeName() + "::" if N10X.Editor.GetCurrentScopeName() else ""
 
-    return ReturnType + ScopeName + FunctionName + "(" + FilteredArgs + ")" + FunctionTrailingSpecifiers
+    return ReturnType + ScopeName + FunctionName + "(" + FunctionArgs + ")" + FunctionTrailingSpecifiers
 
 
 # Returns line number (starts counting from 0) and actual string where line is found
