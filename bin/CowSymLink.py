@@ -2,6 +2,7 @@ import os
 import argparse
 import sys
 
+
 def create_symlink(source, target):
     """Creates a symbolic link to the source in the target directory."""
     if not os.path.exists(source):
@@ -21,6 +22,7 @@ def create_symlink(source, target):
         print(f"Failed to create symlink: {e}")
         sys.exit(1)
 
+
 def main():
     parser = argparse.ArgumentParser(description="Create a symbolic link to a file or directory.")
     parser.add_argument("--s", "--source", required=True, help="Path to the file or directory to create a symbolic link for")
@@ -29,6 +31,7 @@ def main():
     args = parser.parse_args()
 
     create_symlink(args.s, args.t)
+
 
 if __name__ == "__main__":
     main()
