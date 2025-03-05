@@ -39,6 +39,12 @@ def main():
 
     source_directory = source
 
+    # If source directory is a plugin itself just copy it
+    if has_uplugin(source_directory):
+        folder_name = os.path.basename(source_directory)
+        symlink_uplugin(folder_name, source_directory, target)
+        return
+
     # Iterate over items in directory
     for item in os.listdir(source_directory):
         folder_path = os.path.join(source_directory, item)
